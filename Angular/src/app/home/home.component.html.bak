@@ -255,7 +255,7 @@
                     <button mat-raised-button color="warn" 
                             [disabled]="!isAnyBudgetSelected() || budgetList.length === 0" 
                             (click)="deleteBudget()">
-                        <mat-icon></mat-icon>
+                        <mat-icon>delete</mat-icon>
                         Delete Budget
                     </button>
                     
@@ -264,7 +264,7 @@
                             (click)="exportToCSV()"
                             class="export-button"
                             style="margin-left: 10px;">
-                        <mat-icon></mat-icon>
+                        <mat-icon>file_download</mat-icon>
                         Export CSV
                     </button>
                     
@@ -273,7 +273,7 @@
                     <button mat-raised-button color="accent" 
                             [disabled]="!isAnyBudgetSelected() || budgetList.length === 0" 
                             (click)="updateBudget()">
-                        <mat-icon></mat-icon>
+                        <mat-icon>edit</mat-icon>
                         Update Budget
                     </button>
                 </div>

@@ -1,0 +1,309 @@
+<!-- Header (full width, sticky) -->
+<mat-toolbar color="primary" class="header-toolbar sticky-header">
+    <button mat-icon-button (click)="toggleMenuDrawer()" aria-label="Menus">
+        <mat-icon> <img src="assets\menu.png" alt="Menu"></mat-icon>
+    </button>
+    <span class="logo">Expense Tracker</span>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="toggleProfile()" aria-label="Profile" class="profile-btn">
+        <mat-icon><img src="assets\profile.jpeg" alt="Profile"></mat-icon>
+    </button>
+    <span class="profile-name">{{ employee?.employeeName }}</span>
+</mat-toolbar>
+
+<!-- Hamburger Menus Drawer -->
+<div class="menu-drawer" *ngIf="showMenuDrawer">
+    <mat-card>
+        <mat-card-content>
+            <ul *ngIf="Menus && Menus.length;">
+                <li *ngFor="let menu of Menus">
+                    <a [routerLink]="menu.contextRoot" style="text-decoration: none; font-size: 18px;">{{ menu.menuName
+                        }}</a>
+                </li>
+            </ul>
+
+        </mat-card-content>
+
+    </mat-card>
+</div>
+
+<!-- Profile Card (dropdown below profile button) -->
+<div class="profile-dropdown" *ngIf="showProfile">
+    <mat-card>
+        <mat-card-title>Employee Profile</mat-card-title>
+        <mat-card-content>
+            <p><strong>ID:</strong> {{ employee?.employeeId }}</p>
+            <p><strong>Name:</strong> {{ employee?.employeeName }}</p>
+            <p><strong>Date of Birth:</strong> {{ employee?.employeeDOB }}</p>
+            <p><strong>Project:</strong> {{ employee?.employeeProject }}</p>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<!-- Main Content (add your main content here if needed) -->
+<div class="main-content" style="width: 100%; max-width: 100vw; overflow-x: hidden; box-sizing: border-box;">
+    <div class="top-section" style="display: flex; gap: 20px; align-items: flex-start; width: 100%; max-width: 100%; overflow-x: hidden; box-sizing: border-box;">
+        <div class="expense-image-section left-image">
+            <img src="assets/expense-illustration.jpg" alt="Expense Illustration" class="illustration-img">
+        </div>
+        <div class="expense-form-section center-form">
+            <mat-card class="expense-form-card">
+                <mat-card-title>Add Budget</mat-card-title>
+            <div *ngIf="successMessageFlag" class="success-message">{{ successMessage }}</div>
+<div *ngIf="warningMessageFlag" class="warning-message">{{ successMessage }}</div>
+<div *ngIf="errorMessageFlag" class="error-message">{{ errorMessage }}</div>
+<div *ngIf="isLoading" class="loader-container" style="display: flex; justify-content: center; margin: 16px 0;">
+    <mat-spinner diameter="40"></mat-spinner>
+</div>
+
+            <mat-card-content>
+                <form #budgetForm="ngForm" (ngSubmit)="addBudget()">
+                    <div class="form-row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Month</mat-label>
+                            <mat-select [(ngModel)]="budget.month" name="month" required>
+                                <mat-option *ngFor="let m of months" [value]="m.value">{{m.label}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Amount</mat-label>
+                            <input matInput type="number" min="0" [(ngModel)]="budget.amount" name="amount" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Budget Limit (Optional)</mat-label>
+                            <input matInput type="number" min="0" [(ngModel)]="budget.budgetLimit" name="budgetLimit" placeholder="Enter budget limit (optional)">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Category</mat-label>
+                            <mat-select [(ngModel)]="budget.category" name="category" required>
+                                <mat-option *ngFor="let cat of categories" [value]="cat">{{cat}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>User ID</mat-label>
+                            <input matInput type="text" [(ngModel)]="budget.userId" name="userId" required
+                                [disabled]="true">
+                        </mat-form-field>
+                        
+                    </div>
+                    <div class="form-row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Created At</mat-label>
+                            <input matInput [value]="budget.created_at | date:'dd-MM-yyyy'" disabled>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" style="flex: 1 1 0;">
+                            <mat-label>Updated At</mat-label>
+                            <input matInput [matDatepicker]="updatedAtPicker" [(ngModel)]="budget.updated_at"
+                                name="updated_at">
+                            <mat-datepicker-toggle matSuffix [for]="updatedAtPicker"></mat-datepicker-toggle>
+                            <mat-datepicker #updatedAtPicker></mat-datepicker>
+                        </mat-form-field>
+
+
+                    </div>
+                    <div class="form-actions">
+                        <button mat-raised-button color="primary" type="submit">Add Budget</button>
+                        <button mat-stroked-button color="primary" type="button" (click)="viewBudgets()" style="margin-left: 12px;">View Budgets</button>
+                    </div>
+                </form>
+            </mat-card-content>
+        </mat-card>
+        </div>
+        
+        <!-- Budget Table Section - Right Side -->
+        <div class="budget-table-section" *ngIf="showBudgetTable" style="flex: 1; min-width: 600px; max-width: 800px; margin-right: 20px; background-color: #f8f9fa; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            <div style="margin: 0;">
+                                    <div class="table-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding: 10px 0;">
+                        <h3 style="margin: 0; color: #1976d2; font-weight: 500;">Budget List</h3>
+                        <button mat-raised-button 
+                                color="primary" 
+                                (click)="closeBudgetTable()" 
+                                class="close-table-btn"
+                                style="width: 47px; height: 23px;">
+                                close
+                            <mat-icon style="font-size: 18px;"></mat-icon>
+                        </button>
+                    </div>
+                    
+                    <!-- Filter Section -->
+                    <div class="filter-section" style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px; padding: 15px; background: #f5f5f5; border-radius: 8px; flex-wrap: wrap;">
+                        <mat-form-field appearance="outline" style="min-width: 180px;">
+                            <mat-label>Filter by Month</mat-label>
+                            <mat-select [(ngModel)]="selectedMonth" (ngModelChange)="onMonthFilterChange($event)">
+                                <mat-option value="">All Months</mat-option>
+                                <mat-option *ngFor="let month of monthOptions" [value]="month.value">
+                                    {{ month.name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        
+                        <mat-form-field appearance="outline" style="min-width: 180px;">
+                            <mat-label>Filter by Category</mat-label>
+                            <mat-select [(ngModel)]="selectedCategory" (ngModelChange)="onCategoryFilterChange($event)">
+                                <mat-option value="">All Categories</mat-option>
+                                <mat-option *ngFor="let category of categories" [value]="category">
+                                    {{ category }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        
+                        <button mat-raised-button 
+                                color="primary" 
+                                (click)="refreshData()"
+                                [disabled]="isLoading"
+                                style="height: 40px; margin-right: 10px;">
+                            <mat-icon *ngIf="!isLoading"></mat-icon>
+                            <mat-spinner *ngIf="isLoading" diameter="20" style="margin-right: 8px;"></mat-spinner>
+                            {{ isLoading ? 'Refreshing...' : 'Refresh' }}
+                        </button>
+                        
+                        <button mat-raised-button 
+                                color="accent" 
+                                (click)="exportToCSV()"
+                                [disabled]="budgetList.length === 0"
+                                class="export-button"
+                                style="height: 40px;">
+                            <mat-icon></mat-icon>
+                            Export CSV
+                        </button>
+                    </div>
+                    
+                    <!-- Budget Warning Alert -->
+                    <div *ngIf="getBudgetWarningsCount() > 0" class="budget-warning-message" style="display: flex; align-items: center; margin-bottom: 20px;">
+                        <mat-icon style="color: #d32f2f; margin-right: 10px;"></mat-icon>
+                        <span><strong>Budget Alert:</strong> {{getBudgetWarningsCount()}} budget(s) have exceeded their limits!</span>
+                    </div>
+                    
+                    <!-- No Data Found Message -->
+                    <div *ngIf="budgetList.length === 0 && !isLoading" class="no-data-message" style="text-align: center; padding: 40px; color: #666;">
+                        <mat-icon style="font-size: 48px; height: 48px; width: 48px; color: #ccc;"></mat-icon>
+                        <h3 style="margin: 16px 0 8px 0; color: #999;">No Data Found</h3>
+                        <p style="margin: 0; color: #666;">No budget records found for the selected criteria.</p>
+                       
+                    </div>
+                
+                <div class="table-wrapper" *ngIf="budgetList.length > 0">
+                    <mat-radio-group [(ngModel)]="selectedBudgetId" name="selectedBudget" (ngModelChange)="onBudgetSelection($event)">
+                        <table mat-table [dataSource]="paginatedBudgetList" class="mat-elevation-z8 bordered-table">
+                            <ng-container matColumnDef="select">
+                                <th mat-header-cell *matHeaderCellDef>Select</th>
+                                <td mat-cell *matCellDef="let row">
+                                    <mat-radio-button [value]="row.id"></mat-radio-button>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="amount">
+                                <th mat-header-cell *matHeaderCellDef>Amount</th>
+                                <td mat-cell *matCellDef="let row">₹{{ row.amount }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="budgetLimit">
+                                <th mat-header-cell *matHeaderCellDef>Budget Limit</th>
+                                <td mat-cell *matCellDef="let row" [ngClass]="{'budget-exceeded': isBudgetExceeded(row)}">
+                                    <span *ngIf="row.budgetLimit; else noLimit">₹{{ row.budgetLimit }}</span>
+                                    <ng-template #noLimit><span style="color: #999; font-style: italic;">No limit set</span></ng-template>
+                                    <mat-icon *ngIf="isBudgetExceeded(row)" style="color: red; font-size: 16px; margin-left: 5px;"></mat-icon>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="month">
+                                <th mat-header-cell *matHeaderCellDef>Month</th>
+                                <td mat-cell *matCellDef="let row">{{ getMonthName(row.month) }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="category">
+                                <th mat-header-cell *matHeaderCellDef>Category</th>
+                                <td mat-cell *matCellDef="let row">{{ row.category }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="created_at">
+                                <th mat-header-cell *matHeaderCellDef>Created At</th>
+                                <td mat-cell *matCellDef="let row">{{ row.created_at | date:'dd-MM-yyyy' }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="updated_at">
+                                <th mat-header-cell *matHeaderCellDef>Updated At</th>
+                                <td mat-cell *matCellDef="let row">{{ row.updated_at | date:'dd-MM-yyyy' }}</td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="['select','amount','budgetLimit','month','category','created_at','updated_at']"></tr>
+                            <tr mat-row *matRowDef="let row; columns: ['select','amount','budgetLimit','month','category','created_at','updated_at'];"></tr>
+                        </table>
+                    </mat-radio-group>
+                </div>
+                
+                <!-- Pagination Controls -->
+                <div class="pagination-controls">
+                    <button mat-stroked-button color="primary" 
+                            [disabled]="!hasPreviousPage()" 
+                            (click)="previousPage()">
+                        <mat-icon></mat-icon>
+                        Previous
+                    </button>
+                    
+                    <span class="page-indicator" style="font-weight: 500; color: #1976d2;">
+                        Page {{ currentPage + 1 }} of {{ totalPages }}
+                    </span>
+                    
+                    <button mat-stroked-button color="primary" 
+                            [disabled]="!hasNextPage()" 
+                            (click)="nextPage()">
+                        Next
+                        <mat-icon></mat-icon>
+                    </button>
+                </div>
+                
+                <!-- Action Buttons - Aligned with Pagination -->
+                <div class="table-actions">
+                    <button mat-raised-button color="warn" 
+                            [disabled]="!isAnyBudgetSelected() || budgetList.length === 0" 
+                            (click)="deleteBudget()">
+                        <mat-icon>delete</mat-icon>
+                        Delete Budget
+                    </button>
+                    
+                    <button mat-raised-button color="primary" 
+                            [disabled]="budgetList.length === 0" 
+                            (click)="exportToCSV()"
+                            class="export-button"
+                            style="margin-left: 10px;">
+                        <mat-icon>file_download</mat-icon>
+                        Export CSV
+                    </button>
+                    
+                    <div style="flex: 1;"></div>
+                    
+                    <button mat-raised-button color="accent" 
+                            [disabled]="!isAnyBudgetSelected() || budgetList.length === 0" 
+                            (click)="updateBudget()">
+                        <mat-icon>edit</mat-icon>
+                        Update Budget
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Budget Chart Section -->
+    <div class="chart-section" *ngIf="showChart && budgetList.length > 0" style="margin-top: 20px; width: 100%; display: flex; justify-content: center;">
+        <mat-card class="chart-card">
+            <mat-card-header>
+                <mat-card-title style="color: #1976d2; font-weight: 500; margin-left: 3%; margin-top: 3%;">Budget by Category</mat-card-title>
+                <mat-card-subtitle style="margin-left: 3%;">Visual breakdown of your spending by category</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="chart-container" style="position: relative; width: 100%; height: 400px; display: block;">
+                    <canvas #pieChart 
+                            id="pieChart"
+                            width="400" 
+                            height="400"
+                            style="width: 100%; height: 100%; display: block;">
+                    </canvas>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+
+
+<!-- Footer (full width, sticky bottom) -->
+<footer class="footer sticky-footer">
+    <span>© {{ currentYear }} MyApp. All rights reserved.</span>
+</footer>

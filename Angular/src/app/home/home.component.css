@@ -1,0 +1,1114 @@
+/* Global overflow control - Prevent horizontal scroll */
+* {
+	box-sizing: border-box;
+}
+
+:host {
+	display: block;
+	width: 100vw;
+	max-width: 100%;
+	overflow-x: hidden;
+	box-sizing: border-box;
+}
+
+body, html {
+	overflow-x: hidden;
+	max-width: 100%;
+}
+
+.main-content {
+	width: 100%;
+	max-width: 100vw;
+	overflow-x: hidden;
+	box-sizing: border-box;
+}
+
+/* Success and Error Message Styles */
+.success-message {
+	background: #e6f9ec;
+	color: #218838;
+	border: 1px solid #b7ebc6;
+	border-radius: 6px;
+	padding: 10px 18px;
+	margin: 12px 0 8px 0;
+	font-size: 1.08rem;
+	font-weight: 500;
+	text-align: center;
+	box-shadow: 0 1.5px 6px 0 rgba(33,136,56,0.07);
+}
+.error-message {
+	background: #fff3f3;
+	color: #c82333;
+	border: 1px solid #f5c6cb;
+	border-radius: 6px;
+	padding: 10px 18px;
+	margin: 12px 0 8px 0;
+	font-size: 1.08rem;
+	font-weight: 500;
+	text-align: center;
+	box-shadow: 0 1.5px 6px 0 rgba(200,35,51,0.07);
+}
+.warning-message {
+	background: #fff8e1;
+	color: #f57c00;
+	border: 1px solid #ffcc02;
+	border-radius: 6px;
+	padding: 10px 18px;
+	margin: 12px 0 8px 0;
+	font-size: 1.08rem;
+	font-weight: 500;
+	text-align: center;
+	box-shadow: 0 1.5px 6px 0 rgba(245,124,0,0.15);
+}
+/* --- Add Budget Card Styling --- */
+.expense-form-card {
+	background: #fff;
+	border-radius: 18px;
+	box-shadow: 0 4px 24px 0 rgba(0,0,0,0.10), 0 1.5px 4px 0 rgba(0,0,0,0.08);
+	padding: 32px 28px 24px 28px;
+	min-width: 340px;
+	max-width: 420px;
+	margin: 0 auto;
+	transition: box-shadow 0.2s;
+}
+.expense-form-card:hover {
+	box-shadow: 0 8px 32px 0 rgba(0,0,0,0.16), 0 3px 8px 0 rgba(0,0,0,0.10);
+}
+.expense-form-card mat-card-title {
+	font-size: 2rem;
+	font-weight: 600;
+	color: #1976d2;
+	margin-bottom: 18px;
+	text-align: center;
+}
+.expense-form-card mat-card-content {
+	padding: 0;
+}
+.expense-form-card .form-row {
+	display: flex;
+	gap: 18px;
+	margin-bottom: 18px;
+}
+.expense-form-card .form-row mat-form-field {
+	flex: 1 1 0;
+}
+.expense-form-card .form-actions {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 12px;
+	margin-top: 18px;
+	flex-wrap: wrap;
+}
+.expense-form-card button[type="submit"] {
+	font-size: 1.1rem;
+	padding: 8px 32px;
+	border-radius: 8px;
+	font-weight: 500;
+	letter-spacing: 0.5px;
+}
+
+.expense-form-card .form-actions button {
+	font-size: 14px;
+	padding: 10px 24px;
+	height: 42px;
+	min-width: 130px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+}
+
+/* Form button color-specific hover effects */
+.expense-form-card button[type="submit"]:hover:not([disabled]) {
+	background-color: #1976d2;
+	color: white;
+}
+
+.expense-form-card button[color="primary"]:hover:not([disabled]) {
+	background-color: #1976d2;
+	color: white;
+	border-color: #1976d2;
+}
+
+@media (max-width: 480px) {
+	.expense-form-card .form-actions {
+		flex-direction: column;
+		gap: 8px;
+	}
+	
+	.expense-form-card .form-actions button {
+		width: 100%;
+		max-width: 200px;
+	}
+}
+
+/* --- Right Action Buttons Styling --- */
+.right-actions {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: flex-start;
+	min-width: 180px;
+	margin-top: 40px;
+	background: #f5f7fa;
+	border-radius: 16px;
+	box-shadow: 0 2px 12px 0 rgba(25, 118, 210, 0.08);
+	padding: 32px 18px 24px 18px;
+}
+.action-buttons {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.action-buttons button {
+	margin-bottom: 18px;
+	width: 160px;
+	font-size: 1.05rem;
+	border-radius: 8px;
+	font-weight: 500;
+	letter-spacing: 0.3px;
+	box-shadow: 0 1.5px 4px 0 rgba(25, 118, 210, 0.08);
+	transition: background 0.2s, color 0.2s;
+}
+.action-buttons button:last-child {
+	margin-bottom: 0;
+}
+.action-buttons button[color="accent"]:hover {
+	background: #ffe0b2;
+	color: #e65100;
+}
+.action-buttons button[color="primary"]:hover {
+	background: #e3f2fd;
+	color: #1976d2;
+}
+
+@media (max-width: 1100px) {
+	.main-content-flex {
+		flex-direction: column;
+		gap: 16px;
+		align-items: center;
+	}
+	.left-image, .center-form, .right-actions {
+		justify-content: center;
+		align-items: center;
+		min-width: unset;
+		margin-top: 0;
+	}
+	.expense-form-card {
+		min-width: 260px;
+		max-width: 98vw;
+		padding: 18px 8px 12px 8px;
+	}
+	.right-actions {
+		width: 100%;
+		padding: 18px 8px 12px 8px;
+		margin-top: 0;
+	}
+	.action-buttons button {
+		width: 100%;
+	}
+}
+/* Three-column flex: left image, center form, right actions */
+.main-content-flex {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	justify-content: center;
+	gap: 32px;
+}
+.left-image {
+	flex: 1 1 0;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	min-width: 200px;
+}
+.center-form {
+	flex: 2 1 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.right-actions {
+	flex: 1 1 0;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: flex-start;
+	min-width: 180px;
+	margin-top: 40px;
+}
+.action-buttons button {
+	margin-bottom: 16px;
+	width: 160px;
+}
+/* New layout styles for side-by-side arrangement */
+.top-section {
+	margin: 32px auto;
+	width: 100%;
+	max-width: calc(100vw - 40px);
+	padding: 0 20px;
+	box-sizing: border-box;
+	overflow-x: hidden;
+}
+
+.budget-table-section {
+	margin-left: 20px;
+	box-sizing: border-box;
+	overflow: visible;
+}
+
+.budget-table-section > div {
+	width: 100%;
+	max-width: 100%;
+	overflow: visible;
+	box-sizing: border-box;
+}
+
+.budget-table-section h3 {
+	color: #1976d2;
+	font-weight: 600;
+	margin-bottom: 16px;
+}
+
+/* Table header and styling - No scroll */
+.table-wrapper {
+	width: 100%;
+	overflow: visible;
+	box-sizing: border-box;
+	min-width: 100%;
+}
+
+.budget-table-section table {
+	width: 100%;
+	min-width: 100%;
+	table-layout: fixed;
+	word-wrap: break-word;
+}
+
+.budget-table-section .mat-mdc-header-row {
+	background-color: #3f51b5 !important;
+}
+
+.budget-table-section .mat-mdc-header-cell {
+	color: white !important;
+	font-weight: 600 !important;
+	background-color: #3f51b5 !important;
+}
+
+.budget-table-section .mat-mdc-row:nth-child(even) {
+	background-color: #f8f9fa;
+}
+
+.budget-table-section .mat-mdc-row:hover {
+	background-color: #e3f2fd !important;
+}
+
+/* General table cell styling */
+.budget-table-section .mat-mdc-header-cell,
+.budget-table-section .mat-mdc-cell {
+	padding: 12px 8px !important;
+	font-size: 14px;
+	text-align: left;
+	vertical-align: middle;
+	word-break: break-word;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	line-height: 1.3;
+}
+
+/* General table cell styling */
+.budget-table-section .mat-mdc-header-cell,
+.budget-table-section .mat-mdc-cell {
+	padding: 12px 8px !important;
+	font-size: 14px;
+	text-align: left;
+	vertical-align: middle;
+	word-break: break-word;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	line-height: 1.3;
+}
+
+/* Pagination Controls Layout */
+.pagination-controls {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 16px;
+	padding: 0 8px;
+}
+
+.pagination-controls button {
+	min-width: 110px;
+	height: 40px;
+	font-size: 14px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+}
+
+.pagination-controls button mat-icon {
+	font-size: 16px;
+}
+
+/* Primary button color override */
+.pagination-controls button[color="primary"]:hover:not([disabled]) {
+	background-color: #1976d2;
+	color: white;
+	border-color: #1976d2;
+}
+
+.table-actions {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 12px;
+	padding: 16px 8px;
+	border-top: 1px solid #e0e0e0;
+}
+
+.table-actions button {
+	min-width: 150px;
+	height: 42px;
+	font-size: 14px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+}
+
+.table-actions button mat-icon {
+	font-size: 18px;
+}
+
+/* Color-specific hover effects */
+.table-actions button[color="warn"]:hover:not([disabled]) {
+	background-color: #f44336;
+	color: white;
+}
+
+.table-actions button[color="accent"]:hover:not([disabled]) {
+	background-color: #ff4081;
+	color: white;
+}
+
+.pagination-info {
+	font-size: 13px;
+	color: #666;
+	background: #f5f5f5;
+	padding: 4px 8px;
+	border-radius: 4px;
+}
+
+.page-indicator {
+	background: #e3f2fd;
+	padding: 8px 16px;
+	border-radius: 20px;
+	font-size: 14px;
+}
+
+/* Unified Button Styling - Applied to all buttons */
+.budget-table-section button,
+.expense-form-card button,
+.pagination-controls button,
+.table-actions button,
+.budget-header button {
+	transition: all 0.3s ease;
+	border-radius: 8px;
+	font-weight: 500;
+	letter-spacing: 0.5px;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+	position: relative;
+	overflow: hidden;
+}
+
+/* Hover effects for all buttons */
+.budget-table-section button:hover:not([disabled]),
+.expense-form-card button:hover:not([disabled]),
+.pagination-controls button:hover:not([disabled]),
+.table-actions button:hover:not([disabled]),
+.budget-header button:hover:not([disabled]) {
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Disabled button styling */
+.budget-table-section button[disabled],
+.expense-form-card button[disabled],
+.pagination-controls button[disabled],
+.table-actions button[disabled] {
+	opacity: 0.5;
+	cursor: not-allowed;
+	transform: none;
+	box-shadow: none;
+}
+
+/* Close button specific styling */
+.budget-header button[mat-icon-button] {
+	width: 36px;
+	height: 36px;
+	border-radius: 8px;
+	background-color: #fff;
+	border: 2px solid #f44336;
+	color: #f44336;
+}
+
+.budget-header button[mat-icon-button]:hover:not([disabled]) {
+	background-color: #f44336;
+	color: white;
+	transform: scale(1.05);
+	border-color: #d32f2f;
+}
+
+.budget-header button[mat-icon-button] mat-icon {
+	font-size: 18px;
+	line-height: 1;
+}
+
+/* Bordered table styling */
+.bordered-table {
+	border: 2px solid #e0e0e0;
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.bordered-table .mat-mdc-header-row {
+	border-bottom: 2px solid #1976d2;
+}
+
+.bordered-table .mat-mdc-row {
+	border-bottom: 1px solid #e0e0e0;
+}
+
+.bordered-table .mat-mdc-row:last-child {
+	border-bottom: none;
+}
+
+.bordered-table .mat-mdc-header-cell,
+.bordered-table .mat-mdc-cell {
+	border-right: 1px solid #e0e0e0;
+	position: relative;
+}
+
+.bordered-table .mat-mdc-header-cell:last-child,
+.bordered-table .mat-mdc-cell:last-child {
+	border-right: none;
+}
+
+/* Enhanced budget table section styling */
+.budget-table-section {
+	transition: all 0.3s ease;
+}
+
+.budget-table-section:hover {
+	box-shadow: 0 4px 16px rgba(0,0,0,0.15) !important;
+}
+
+/* Universal button focus and active states */
+.budget-table-section button:focus,
+.expense-form-card button:focus,
+.pagination-controls button:focus,
+.table-actions button:focus,
+.budget-header button:focus {
+	outline: 2px solid #1976d2;
+	outline-offset: 2px;
+}
+
+.budget-table-section button:active:not([disabled]),
+.expense-form-card button:active:not([disabled]),
+.pagination-controls button:active:not([disabled]),
+.table-actions button:active:not([disabled]),
+.budget-header button:active:not([disabled]) {
+	transform: scale(0.98);
+}
+
+/* Ripple effect for all buttons */
+.budget-table-section button::before,
+.expense-form-card button::before,
+.pagination-controls button::before,
+.table-actions button::before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.3);
+	transform: translate(-50%, -50%);
+	transition: width 0.3s, height 0.3s;
+	z-index: 1;
+}
+
+.budget-table-section button:hover::before,
+.expense-form-card button:hover::before,
+.pagination-controls button:hover::before,
+.table-actions button:hover::before {
+	width: 100px;
+	height: 100px;
+}
+
+@media (max-width: 1200px) {
+	.top-section {
+		flex-direction: column !important;
+		gap: 32px !important;
+		align-items: center !important;
+		padding: 0 10px !important;
+		max-width: calc(100vw - 20px) !important;
+		width: calc(100vw - 20px) !important;
+	}
+	
+	.budget-table-section {
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+		width: 100% !important;
+		max-width: 100% !important;
+		box-sizing: border-box;
+	}
+	
+	.expense-form-section {
+		width: 100%;
+		max-width: 500px;
+	}
+	
+	.budget-table-section table {
+		min-width: 500px;
+	}
+	
+	.table-actions {
+		flex-direction: column;
+		gap: 12px;
+	}
+	
+	.table-actions button {
+		width: 100%;
+		max-width: 200px;
+	}
+	
+	.budget-table-section table {
+		min-width: 500px;
+	}
+}
+
+/* Mobile devices */
+@media (max-width: 768px) {
+	.top-section {
+		padding: 0 5px !important;
+		max-width: calc(100vw - 10px) !important;
+		gap: 20px !important;
+	}
+	
+	.budget-table-section {
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+	
+	.responsive-mat-table {
+		min-width: 480px;
+		font-size: 12px;
+	}
+	
+	.budget-table-section .mat-mdc-header-cell,
+	.budget-table-section .mat-mdc-cell {
+		padding: 8px 4px !important;
+		font-size: 11px !important;
+		line-height: 1.2;
+	}
+	
+	.select-column {
+		width: 50px !important;
+		min-width: 50px !important;
+		max-width: 50px !important;
+	}
+	
+	.amount-column {
+		width: 70px !important;
+		min-width: 70px !important;
+		max-width: 70px !important;
+	}
+	
+	.month-column {
+		width: 60px !important;
+		min-width: 60px !important;
+		max-width: 60px !important;
+	}
+	
+	.category-column {
+		width: 80px !important;
+		min-width: 80px !important;
+		max-width: 80px !important;
+	}
+	
+	.date-column {
+		width: 70px !important;
+		min-width: 70px !important;
+		max-width: 70px !important;
+	}
+	
+	.pagination-controls {
+		flex-direction: column;
+		gap: 10px;
+		text-align: center;
+	}
+	
+	.pagination-controls button {
+		width: 100%;
+		max-width: 150px;
+	}
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+	.responsive-mat-table {
+		min-width: 400px;
+	}
+	
+	.budget-table-section .mat-mdc-header-cell,
+	.budget-table-section .mat-mdc-cell {
+		padding: 6px 2px !important;
+		font-size: 10px !important;
+	}
+	
+	.select-column {
+		width: 40px !important;
+		min-width: 40px !important;
+		max-width: 40px !important;
+	}
+	
+	.amount-column,
+	.month-column,
+	.category-column {
+		width: 55px !important;
+		min-width: 55px !important;
+		max-width: 55px !important;
+	}
+	
+	.date-column {
+		width: 60px !important;
+		min-width: 60px !important;
+		max-width: 60px !important;
+	}
+}
+
+@media (max-width: 1100px) {
+	.main-content-flex {
+		flex-direction: column;
+		gap: 16px;
+		align-items: center;
+	}
+	.left-image, .center-form, .right-actions {
+		justify-content: center;
+		align-items: center;
+		min-width: unset;
+		margin-top: 0;
+	}
+	.action-buttons button {
+		width: 100%;
+	}
+}
+/* Flex row for main content: image left, form right */
+.main-content-flex {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	gap: 48px;
+}
+.left-image {
+	flex: 1 1 0;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+.right-form {
+	flex: 1 1 0;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+@media (max-width: 900px) {
+	.main-content-flex {
+		flex-direction: column;
+		gap: 16px;
+	}
+	.left-image, .right-form {
+		justify-content: center;
+	}
+}
+/* Fix for mat-select dropdown overlay position */
+.expense-form-section, .main-content {
+	position: relative !important;
+	overflow: visible !important;
+}
+/* Ensure Angular Material overlay dropdowns (mat-select) are always visible */
+.cdk-overlay-container, .cdk-overlay-pane {
+	z-index: 3000 !important;
+}
+.profile-btn {
+	position: relative;
+	z-index: 201;
+}
+.profile-dropdown {
+	position: fixed;
+	top: 64px;
+	right: 24px;
+	width: 320px;
+	z-index: 201;
+	background: transparent;
+}
+/* Header and Footer Styling */
+/* Header Styling */
+.header-toolbar {
+	width: 100vw;
+	left: 0;
+	top: 0;
+	position: fixed;
+	z-index: 100;
+	display: flex;
+	align-items: center;
+	font-size: 1.2rem;
+	font-weight: 600;
+	padding: 0 24px;
+	border-radius: 0;
+	background: linear-gradient(90deg, #1976d2 0%, #26c6da 100%);
+	color: #fff;
+	box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
+}
+.sticky-header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	z-index: 100;
+}
+.logo {
+	font-weight: bold;
+	font-size: 1.3rem;
+	margin-left: 16px;
+    
+}
+.spacer {
+	flex: 1 1 auto;
+}
+.profile-name {
+	margin-left: 8px;
+	font-weight: 500;
+}
+.profile-section {
+	max-width: 350px;
+	margin: 88px auto 0 auto;
+}
+.menu-drawer {
+	position: fixed;
+	top: 64px;
+	left: 0;
+	width: 300px;
+	z-index: 200;
+	background: transparent;
+}
+.menu-drawer mat-card {
+	border-radius: 0 0 12px 0;
+	box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+}
+/* Footer Styling */
+.footer {
+	width: 100vw;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	background: linear-gradient(90deg, #1976d2 0%, #26c6da 100%);
+	text-align: center;
+	color: #fff;
+	font-size: 1rem;
+	padding: 16px 0 0 0;
+	z-index: 100;
+	box-shadow: 0 -2px 8px rgba(25, 118, 210, 0.08);
+}
+.sticky-footer {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100vw;
+	z-index: 100;
+}
+mat-icon {
+	font-size: 28px;
+}
+/* Main Content Padding for sticky header/footer */
+.main-content {
+	min-height: 60vh;
+	padding-top: 90px;
+	padding-bottom: 80px;
+}
+/* Home Page Modern Styling */
+.home-container {
+	max-width: 900px;
+	margin: 40px auto;
+	padding: 24px;
+	background: #f5f7fa;
+	border-radius: 16px;
+	box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+.profile-section, .menus-section {
+	margin-top: 32px;
+}
+
+mat-toolbar {
+	border-radius: 8px 8px 0 0;
+	margin-bottom: 24px;
+	font-size: 1.2rem;
+	font-weight: 500;
+}
+
+mat-card {
+	margin-bottom: 24px;
+	border-radius: 12px;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+
+mat-card-title {
+	font-size: 1.3rem;
+	font-weight: 600;
+	color: #1976d2;
+	margin-bottom: 12px;
+}
+
+mat-card-content p {
+	margin: 6px 0;
+	font-size: 1.05rem;
+}
+
+.menus-section ul {
+	list-style: none;
+	padding: 0;
+}
+
+.menus-section li {
+	padding: 8px 0;
+	border-bottom: 1px solid #e0e0e0;
+	font-size: 1.08rem;
+}
+
+.menus-section li:last-child {
+	border-bottom: none;
+}
+
+@media (max-width: 600px) {
+	.home-container {
+		padding: 8px;
+	}
+	mat-card {
+		padding: 8px;
+	}
+}
+/* Expense Tracker Modern UI Styling */
+.expense-tracker-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 24px;
+  background: #f5f7fa;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+.expense-header {
+  display: flex;
+  align-items: center;
+  border-radius: 8px 8px 0 0;
+  margin-bottom: 24px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  padding: 0 16px;
+}
+.logo-img {
+  height: 40px;
+  margin-right: 16px;
+}
+.budget-img {
+  height: 36px;
+  margin-left: 16px;
+}
+.title {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+.spacer {
+  flex: 1 1 auto;
+}
+/* Expense Form Section */
+.expense-form-section {
+	margin-top: 32px;
+	display: flex;
+	justify-content: center;
+}
+.expense-form-card {
+	border-radius: 16px;
+	box-shadow: 0 4px 16px rgba(25, 118, 210, 0.10);
+	padding: 24px 32px;
+	background: #fff;
+	min-width: 340px;
+	max-width: 500px;
+}
+.form-row {
+	display: flex;
+	gap: 24px;
+	margin-bottom: 16px;
+}
+.form-actions {
+	text-align: right;
+}
+.expense-image-section {
+	margin-top: 40px;
+	text-align: center;
+}
+.illustration-img {
+	max-width: 400px;
+	width: 100%;
+	border-radius: 16px;
+	box-shadow: 0 2px 8px rgba(25, 118, 210, 0.10);
+}
+/* Chart Styles */
+.chart-section {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	max-width: 100%;
+	margin-top: 20px;
+	padding: 0 20px;
+	box-sizing: border-box;
+}
+
+.chart-card {
+	width: 100%;
+	max-width: 800px;
+	border-radius: 16px;
+	box-shadow: 0 4px 12px rgba(25, 118, 210, 0.15);
+	overflow: hidden;
+	background: white;
+	border: 1px solid rgba(25, 118, 210, 0.1);
+}
+
+.chart-card mat-card-header {
+	background: linear-gradient(135deg, #1976d2 0%, #42a5f5 100%);
+	color: white;
+	padding: 20px 24px 16px;
+	margin: -24px -24px 20px -24px;
+}
+
+.chart-card mat-card-title {
+	color: white !important;
+	font-size: 1.4rem;
+	font-weight: 500;
+	margin-bottom: 4px;
+}
+
+.chart-card mat-card-subtitle {
+	color: rgba(255, 255, 255, 0.9) !important;
+	font-size: 0.95rem;
+	font-weight: 400;
+}
+
+.chart-container {
+	position: relative;
+	width: 100%;
+	height: 450px;
+	display: block;
+	padding: 15px;
+	box-sizing: border-box;
+}
+
+.chart-container canvas {
+	width: 100% !important;
+	height: 100% !important;
+	display: block;
+}
+
+@media (max-width: 768px) {
+	.chart-section {
+		padding: 0 10px;
+	}
+	
+	.chart-container {
+		height: 300px;
+		padding: 15px;
+	}
+	
+	.chart-card mat-card-title {
+		font-size: 1.2rem;
+	}
+}
+
+@media (max-width: 600px) {
+	.home-container, .expense-tracker-container {
+		padding: 8px;
+	}
+	.form-row {
+		flex-direction: column;
+		gap: 8px;
+	}
+	.illustration-img {
+		max-width: 100%;
+	}
+	.expense-form-card {
+		padding: 12px 4px;
+	}
+	
+	.chart-container {
+		height: 280px;
+		padding: 10px;
+	}
+}
+
+/* Budget Warning Styles */
+.budget-exceeded {
+	background-color: #fff3f3 !important;
+	color: #d32f2f !important;
+	font-weight: bold;
+}
+
+.budget-warning-icon {
+	color: #d32f2f;
+	font-size: 16px;
+	margin-left: 5px;
+	vertical-align: middle;
+}
+
+.budget-warning-message {
+	background: #fff3f3;
+	color: #d32f2f;
+	border: 1px solid #f5c6cb;
+	border-radius: 6px;
+	padding: 10px 18px;
+	margin: 12px 0 8px 0;
+	font-size: 1.08rem;
+	font-weight: 500;
+	text-align: center;
+	box-shadow: 0 1.5px 6px 0 rgba(211,47,47,0.15);
+}
+
+/* Export Button Styles */
+.export-button {
+	transition: all 0.3s ease;
+}
+
+.export-button:hover:not(:disabled) {
+	transform: translateY(-2px);
+	box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.export-button mat-icon {
+	margin-right: 8px;
+}
+
+/* Filter section button alignment */
+.filter-section button {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}

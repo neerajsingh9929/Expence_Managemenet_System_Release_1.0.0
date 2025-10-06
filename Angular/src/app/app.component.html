@@ -1,0 +1,115 @@
+
+
+<div class="login-bg" *ngIf="!isHomeRoute">
+  <mat-toolbar color="primary" class="login-toolbar" *ngIf="!showLogin">
+    <h3 style="color: black;">Employee Registration</h3>
+  </mat-toolbar>
+    <mat-toolbar color="primary" class="login-toolbar" *ngIf="showLogin">
+    <h3 style="color: black;">Login Here</h3>
+  </mat-toolbar>
+  <div class="top-center-message">
+    <!-- Error message section -->
+    <mat-card *ngIf="responseOutDto.errorflag && !responseOutDto.validationFlag" class="mb-3" style="background: #ffebee; color: #b71c1c; margin-top: 11%;">
+      <mat-card-content>
+        <strong>Error!</strong> {{ responseOutDto.messageString }}
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Success message section -->
+    <mat-card *ngIf="!responseOutDto.errorflag && responseOutDto.messageString" class="mb-3" style="background: #e8f5e9; color: #1b5e20; margin-top: 11%;width: 200%;">
+      <mat-card-content>
+
+        <strong>Success!</strong> {{ messageSuccessString + ' ' + responseOutDto.employee?.employeeId }}
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Validation errors section -->
+    <mat-card *ngIf="responseOutDto.validationFlag" class="mb-3" style="background: #fffde7; color: #f9a825;width: 200%;">
+      <mat-card-content>
+      
+        <strong>Validation Failed!</strong>
+        <ul>
+          <li *ngFor="let error of responseOutDto?.validationErrors | keyvalue">
+            {{ error.value }}
+          </li>
+        </ul>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="mat-typography login-container">
+    <mat-card class="login-card" *ngIf="!showLogin">
+      <mat-card-content>
+        <form>
+          <h2 class="text-center mb-4">Register</h2>
+
+          <mat-form-field appearance="outline" class="custom-mat-field">
+            <mat-label>Name</mat-label>
+            <input matInput type="text" [(ngModel)]="employee.employeeName" name="employeeName" placeholder="Enter full name" autocomplete="off" />
+            <mat-icon matSuffix></mat-icon>
+          </mat-form-field>
+
+          <div class="custom-mat-field simple-date-field" style="width: 94%; margin-left: -6%;">
+            <label for="employeeDOB" class="simple-label">Date of Birth</label>
+            <input type="date" [(ngModel)]="employee.employeeDOB" name="employeeDOB" id="employeeDOB" class="simple-date-input" placeholder="Enter Date of Birth" autocomplete="off" />
+          </div>
+
+          <mat-form-field appearance="outline" class="custom-mat-field">
+            <mat-label>Project</mat-label>
+            <input matInput type="text" [(ngModel)]="employee.employeeProject" name="employeeProject" placeholder="Enter project name" autocomplete="off" />
+            <mat-icon matSuffix></mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="custom-mat-field">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" [(ngModel)]="employee.password" name="password" placeholder="Enter password" autocomplete="off" />
+            <mat-icon matSuffix></mat-icon>
+          </mat-form-field>
+
+          <div class="text-center mt-4">
+            <button mat-raised-button color="primary" (click)="RegisterEmployee()" [disabled]="registerDisabled">Register</button>
+            <button mat-raised-button color="accent" (click)="reset()" style="margin-left: 10px;">Reset</button>
+            <button mat-raised-button color="warn" style="margin-left: 10px;" (click)="employee.password=''; showLogin = !showLogin">Login</button>
+          </div>
+        </form>
+
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="login-card" *ngIf="showLogin">
+      <mat-card-content>
+        <h2 class="text-center mb-4">Login Here</h2>
+        <form (ngSubmit)="login()">
+          <mat-form-field appearance="outline" class="custom-mat-field">
+            <mat-label>Emp Id</mat-label>
+            <input matInput type="text" [(ngModel)]="employee.employeeId" name="empId" placeholder="Enter Employee Id" autocomplete="off" required />
+            <mat-icon matSuffix></mat-icon>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="custom-mat-field">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" [(ngModel)]="employee.password" name="empPassword" placeholder="Enter Password" autocomplete="off" required />
+            <mat-icon matSuffix></mat-icon>
+          </mat-form-field>
+
+          <!-- Show login validation errors -->
+          <mat-card *ngIf="responseOutDto.validationFlag && showLogin" class="mb-3" style="background: #fffde7; color: #f9a825;">
+            <mat-card-content>
+              <strong>Validation Failed!</strong>
+              <ul>
+                <li *ngFor="let error of responseOutDto?.validationErrors | keyvalue">
+                  {{ error.value }}
+                </li>
+              </ul>
+            </mat-card-content>
+          </mat-card>
+
+          <div class="text-center mt-4">
+            <button mat-raised-button color="primary" type="submit">Login</button>
+            <button mat-raised-button color="primary" (click)="reset(); showLogin = false" style="margin-left: 10px;">Register</button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+<router-outlet></router-outlet>
+
